@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 // import ReactDOM from "react-dom";
 import DrawTools from "./components/DrawTools";
+import "./App.css";
 
 // import { GlobalStateProvider, useGlobalState } from "./services/Store";
 import { Map, TileLayer } from "react-leaflet";
