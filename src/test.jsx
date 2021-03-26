@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { Map, TileLayer, Circle, FeatureGroup } from "react-leaflet";
+import {
+  Map,
+  TileLayer,
+  Circle,
+  FeatureGroup,
+  ImageOverlay
+} from "react-leaflet";
 import L from "leaflet";
 import { EditControl } from "react-leaflet-draw";
 
@@ -14,6 +20,11 @@ L.Icon.Default.mergeOptions({
   shadowUrl:
     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0/images/marker-shadow.png"
 });
+
+const bounds = [
+  [0, 0],
+  [1000, 1000]
+];
 
 class test extends Component {
   // see http://leaflet.github.io/Leaflet.draw/docs/leaflet-draw-latest.html#l-draw-event for leaflet-draw events doc
@@ -107,10 +118,10 @@ class test extends Component {
 
   render() {
     return (
-      <Map center={[37.8189, -122.4786]} zoom={13} zoomControl={true}>
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+      <Map crs={L.CRS.Simple} center={[100, 1000]} zoom={0}>
+        <ImageOverlay
+          bounds={bounds}
+          url="https://imgs.6sqft.com/wp-content/uploads/2015/08/20150530/Wonders-of-New-York-map-1.jpg"
         />
         <FeatureGroup
           ref={(reactFGref) => {
