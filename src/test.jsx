@@ -15,8 +15,10 @@ L.Icon.Default.mergeOptions({
     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0/images/marker-shadow.png"
 });
 
-export default class test extends Component {
+class test extends Component {
   // see http://leaflet.github.io/Leaflet.draw/docs/leaflet-draw-latest.html#l-draw-event for leaflet-draw events doc
+
+  _editableFG = null;
 
   _onEdited = (e) => {
     let numEdited = 0;
@@ -40,6 +42,8 @@ export default class test extends Component {
     // Do whatever else you need to. (save to db; etc)
 
     this._onChange();
+    console.log("EFG");
+    console.log(this._editableFG);
   };
 
   _onDeleted = (e) => {
@@ -131,11 +135,9 @@ export default class test extends Component {
       </Map>
     );
   }
-
-  _editableFG = null;
 }
 
-// data taken from the example in https://github.com/PaulLeCam/react-leaflet/issues/176
+export default test;
 
 const getGeoJson = () => {
   return {
