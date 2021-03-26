@@ -5,7 +5,7 @@ import {
   Circle,
   FeatureGroup,
   ImageOverlay,
-  Popup
+  Popup,
 } from "react-leaflet";
 import L from "leaflet";
 import { EditControl } from "react-leaflet-draw";
@@ -19,19 +19,20 @@ L.Icon.Default.mergeOptions({
   iconUrl:
     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0/images/marker-icon.png",
   shadowUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0/images/marker-shadow.png"
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0/images/marker-shadow.png",
 });
 
 const bounds = [
   [0, 0],
-  [285, 400]
+  [285, 400],
 ];
 
 class test extends Component {
   // see http://leaflet.github.io/Leaflet.draw/docs/leaflet-draw-latest.html#l-draw-event for leaflet-draw events doc
 
   state = {
-    adminMode: true
+    adminMode: true,
+    count: 0,
   };
 
   _editableFG = null;
@@ -54,14 +55,17 @@ class test extends Component {
   _onCreated = (e) => {
     let type = e.layerType;
     let layer = e.layer;
+
+    this.state.count = this.state.count + 1;
     if (type === "marker") {
       // Do marker specific actions
       console.log("_onCreated: marker created", e);
-      layer.bindTooltip("dupa")
-      layer.bindPopup("dupa 2")
+
+      layer.bindTooltip("dupa" + this.state.count);
+      layer.bindPopup("dupa 2");
     } else {
       console.log("_onCreated: something else created:", type, e);
-      layer.bindTooltip("dupa")
+      layer.bindTooltip("dupa" + this.state.count);
     }
     // Do whatever else you need to. (save to db; etc)
 
@@ -156,11 +160,10 @@ class test extends Component {
                 onDeleteStart={this._onDeleteStart}
                 onDeleteStop={this._onDeleteStop}
                 draw={{
-                  rectangle: false
+                  rectangle: false,
                 }}
               />
             ) : null}
-           
           </FeatureGroup>
         </Map>
       </div>
@@ -181,17 +184,17 @@ const getGeoJson = () => {
           type: "LineString",
           coordinates: [
             [82.69, 205.25],
-            [212.88, 54.8]
-          ]
-        }
+            [212.88, 54.8],
+          ],
+        },
       },
       {
         type: "Feature",
         properties: {},
         geometry: {
           type: "Point",
-          coordinates: [82.69, 205.25]
-        }
+          coordinates: [82.69, 205.25],
+        },
       },
 
       {
@@ -199,8 +202,8 @@ const getGeoJson = () => {
         properties: {},
         geometry: {
           type: "Point",
-          coordinates: [212.88, 54.8]
-        }
+          coordinates: [212.88, 54.8],
+        },
       },
       {
         type: "Feature",
@@ -213,11 +216,11 @@ const getGeoJson = () => {
               [142.64, 168.07],
               [141.16, 180.65],
               [135.76, 187.37],
-              [131.07, 176.74]
-            ]
-          ]
-        }
-      }
-    ]
+              [131.07, 176.74],
+            ],
+          ],
+        },
+      },
+    ],
   };
 };
