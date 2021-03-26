@@ -57,8 +57,11 @@ class test extends Component {
     if (type === "marker") {
       // Do marker specific actions
       console.log("_onCreated: marker created", e);
+      layer.bindTooltip("dupa")
+      layer.bindPopup("dupa 2")
     } else {
       console.log("_onCreated: something else created:", type, e);
+      layer.bindTooltip("dupa")
     }
     // Do whatever else you need to. (save to db; etc)
 
@@ -157,7 +160,7 @@ class test extends Component {
                 }}
               />
             ) : null}
-            <Popup>An Image Description</Popup>
+           
           </FeatureGroup>
         </Map>
       </div>
