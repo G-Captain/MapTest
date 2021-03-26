@@ -129,7 +129,6 @@ class test extends Component {
   render() {
     return (
       <div>
-        <h1>React Leaflet Map of Poland</h1>
         <button onClick={this.onClickAdminButton}>admin mode</button>
         <Map crs={L.CRS.Simple} center={[156.45, 194.49]} zoom={0.7}>
           <ImageOverlay
