@@ -4,7 +4,8 @@ import {
   TileLayer,
   Circle,
   FeatureGroup,
-  ImageOverlay
+  ImageOverlay,
+  Popup
 } from "react-leaflet";
 import L from "leaflet";
 import { EditControl } from "react-leaflet-draw";
@@ -23,13 +24,22 @@ L.Icon.Default.mergeOptions({
 
 const bounds = [
   [0, 0],
-  [1000, 1000]
+  [285, 400]
 ];
 
 class test extends Component {
   // see http://leaflet.github.io/Leaflet.draw/docs/leaflet-draw-latest.html#l-draw-event for leaflet-draw events doc
 
+  state = {
+    adminMode: true
+  };
+
   _editableFG = null;
+
+  onClickAdminButton = () => {
+    this.state.adminMode = !this.state.adminMode;
+    console.log(this.state.adminMode);
+  };
 
   _onEdited = (e) => {
     let numEdited = 0;
@@ -118,32 +128,40 @@ class test extends Component {
 
   render() {
     return (
-      <Map crs={L.CRS.Simple} center={[100, 1000]} zoom={0}>
-        <ImageOverlay
-          bounds={bounds}
-          url="https://imgs.6sqft.com/wp-content/uploads/2015/08/20150530/Wonders-of-New-York-map-1.jpg"
-        />
-        <FeatureGroup
-          ref={(reactFGref) => {
-            this._onFeatureGroupReady(reactFGref);
-          }}
-        >
-          <EditControl
-            position="topright"
-            onEdited={this._onEdited}
-            onCreated={this._onCreated}
-            onDeleted={this._onDeleted}
-            onMounted={this._onMounted}
-            onEditStart={this._onEditStart}
-            onEditStop={this._onEditStop}
-            onDeleteStart={this._onDeleteStart}
-            onDeleteStop={this._onDeleteStop}
-            draw={{
-              rectangle: false
-            }}
+      <div>
+        <h1>React Leaflet Map of Poland</h1>
+        <button onClick={this.onClickAdminButton}>admin mode</button>
+        <Map crs={L.CRS.Simple} center={[156.45, 194.49]} zoom={0.7}>
+          <ImageOverlay
+            bounds={bounds}
+            url="https://external-preview.redd.it/w9BVe9tGxELJs1GvR-50pCzPFlmeRj5h6ma8tN93SB0.jpg?auto=webp&s=c272d3687d831f334a1c7e32d9a7431b3d22040f"
           />
-        </FeatureGroup>
-      </Map>
+
+          <FeatureGroup
+            ref={(reactFGref) => {
+              this._onFeatureGroupReady(reactFGref);
+            }}
+          >
+            {this.state.adminMode ? (
+              <EditControl
+                position="topright"
+                onEdited={this._onEdited}
+                onCreated={this._onCreated}
+                onDeleted={this._onDeleted}
+                onMounted={this._onMounted}
+                onEditStart={this._onEditStart}
+                onEditStop={this._onEditStop}
+                onDeleteStart={this._onDeleteStart}
+                onDeleteStop={this._onDeleteStop}
+                draw={{
+                  rectangle: false
+                }}
+              />
+            ) : null}
+            <Popup>An Image Description</Popup>
+          </FeatureGroup>
+        </Map>
+      </div>
     );
   }
 }
